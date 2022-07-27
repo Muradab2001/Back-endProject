@@ -16,6 +16,10 @@ namespace MultiShop.DAL
 
 
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Clothes> Clothes { get; set; }
+        public DbSet<ClothesCategory> ClothesCategories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var item in modelBuilder.Model.GetEntityTypes()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MultiShop.DAL;
 using MultiShop.Models;
 using MultiShop.Utilities;
@@ -52,6 +53,51 @@ namespace MultiShop.Areas.MultiShopadmin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id is null || id == 0) return NotFound();
 
+            Slider slider = await _context.Sliders.FindAsync(id);
+            if (slider is null) return NotFound();
+
+            _context.Sliders.Remove(slider);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == 0 || id is null) return NotFound();
+            Slider slider = await _context.Sliders.FirstOrDefaultAsync(s => s.Id == id);
+            if (slider is null) return NotFound();
+            return View(slider);
+
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Edit(int? id,Slider slider)
+        {
+            if (id == null || id == 0) return NotFound();
+            Slider existed = await _context.Sliders.FindAsync(id);
+            if (existed == null) return NotFound();
+            if (!ModelState.IsValid) return View(slider);
+            if (slider.Photo == null)
+            {
+                string filename = existed.Image;
+                _context.Entry(existed).CurrentValues.SetValues(slider);
+                existed.Image = filename;
+            }
+            else
+            {
+                if (!slider.Photo.ImageIsOkay(2))
+                {
+                    ModelState.AddModelError("Photo", "choose image file big");
+                    return View(existed);
+                }
+                FileValidator.FileDelete(_env.WebRootPath, "assets/img", existed.Image);
+            }
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

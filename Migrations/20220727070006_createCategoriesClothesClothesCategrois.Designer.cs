@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MultiShop.DAL;
 
 namespace MultiShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220727070006_createCategoriesClothesClothesCategrois")]
+    partial class createCategoriesClothesClothesCategrois
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,10 +27,6 @@ namespace MultiShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -53,16 +51,11 @@ namespace MultiShop.Migrations
                     b.Property<string>("Desc")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("InformationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
@@ -99,6 +92,26 @@ namespace MultiShop.Migrations
                     b.ToTable("ClothesCategories");
                 });
 
+            modelBuilder.Entity("MultiShop.Models.ClothesColor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClothesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClothesId");
+
+                    b.ToTable("ClothesColor");
+                });
+
             modelBuilder.Entity("MultiShop.Models.ClothesInformation", b =>
                 {
                     b.Property<int>("Id")
@@ -112,6 +125,26 @@ namespace MultiShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ClothesInformation");
+                });
+
+            modelBuilder.Entity("MultiShop.Models.ClothesSizes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClothesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClothesId");
+
+                    b.ToTable("ClothesSizes");
                 });
 
             modelBuilder.Entity("MultiShop.Models.Setting", b =>
@@ -176,13 +209,31 @@ namespace MultiShop.Migrations
             modelBuilder.Entity("MultiShop.Models.ClothesCategory", b =>
                 {
                     b.HasOne("MultiShop.Models.Category", "Category")
-                        .WithMany("ClothesCategory")
+                        .WithMany("PlantCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MultiShop.Models.Clothes", "Clothes")
                         .WithMany("ClothesCategories")
+                        .HasForeignKey("ClothesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MultiShop.Models.ClothesColor", b =>
+                {
+                    b.HasOne("MultiShop.Models.Clothes", "Clothes")
+                        .WithMany("ClothesColors")
+                        .HasForeignKey("ClothesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MultiShop.Models.ClothesSizes", b =>
+                {
+                    b.HasOne("MultiShop.Models.Clothes", "Clothes")
+                        .WithMany("ClothesSizes")
                         .HasForeignKey("ClothesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
