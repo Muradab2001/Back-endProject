@@ -154,3 +154,5 @@ C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiS
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Slider\Edit.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Category\Create.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Category\Index.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Category\Edit.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Clothes\Index.cshtml.g.cs

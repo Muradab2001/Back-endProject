@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MultiShop.DAL;
 using MultiShop.Models;
+using MultiShop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +20,13 @@ namespace MultiShop.Controllers
         }
         public IActionResult Index()
         {
-            List<Slider> silders = _context.Sliders.ToList();
-            return View(silders);
+            HomeVM model = new HomeVM
+            {
+                Sliders = _context.Sliders.ToList(),
+                Categories = _context.Categories.ToList()
+            };
+            return View(model);
+
         }
     }
 }

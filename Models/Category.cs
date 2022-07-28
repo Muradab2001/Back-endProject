@@ -11,7 +11,6 @@ namespace MultiShop.Models
 {
     public class Category : BaseEntity
     {
-        [Required]
         public string Image { get; set; }
         [Required, StringLength(maximumLength: 25)]
         public string Name { get; set; }

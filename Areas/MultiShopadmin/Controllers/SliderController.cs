@@ -69,6 +69,7 @@ namespace MultiShop.Areas.MultiShopadmin.Controllers
             if (id == 0 || id is null) return NotFound();
             Slider slider = await _context.Sliders.FirstOrDefaultAsync(s => s.Id == id);
             if (slider is null) return NotFound();
+            FileValidator.FileDelete(_env.WebRootPath, "assets/img", slider.Image);
             return View(slider);
 
         }
