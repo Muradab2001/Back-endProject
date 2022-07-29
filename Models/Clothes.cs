@@ -20,10 +20,11 @@ namespace MultiShop.Models
         public int InformationId{ get; set; }
         public ClothesInformation ClothesInformation { get; set; }
         public List<ClothesCategory> ClothesCategories { get; set; }
-        [NotMapped]
+       
+        public int CategoryIds { get; set; }
         public List<ClothesImage> ClothesImages { get; set; }
         [NotMapped]
-        public List<int> CategoryIds { get; set; }
+        public List<int> ImageId { get; set; }
         [NotMapped]
         public IFormFile MainPhoto { get; set; }
         [NotMapped]

@@ -156,3 +156,13 @@ C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiS
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Category\Index.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Category\Edit.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Clothes\Index.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Clothes\Detail.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Clothes\Create.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Clothes\Detail.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Areas\MultiShopadmin\Views\Clothes\Edit.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Index.cshtml.g.cs

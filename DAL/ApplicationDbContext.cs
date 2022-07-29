@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MultiShop.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MultiShop.DAL
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
         {
@@ -19,6 +20,13 @@ namespace MultiShop.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<Clothes> Clothes { get; set; }
         public DbSet<ClothesCategory> ClothesCategories { get; set; }
+        public DbSet<ClothesInformation> clothesInformations { get; set; }
+        public DbSet<ClothesImage> ClothesImages { get; set; }
+        public DbSet<Setting> Settings { get; set; }
+        public DbSet<BasketItem> BasketItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,11 +42,11 @@ namespace MultiShop.DAL
                 .HasIndex(p => p.Key)
                 .IsUnique();
 
-            //modelBuilder.Entity<Category>()
-            //    .HasIndex(c => c.Name)
-            //    .IsUnique();
+            modelBuilder.Entity<Category>()
+                .HasIndex(c => c.Name)
+                .IsUnique();
 
-            //base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

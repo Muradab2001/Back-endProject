@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MultiShop.DAL;
 using MultiShop.Models;
+using MultiShop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +24,128 @@ namespace MultiShop.Areas.MultiShopadmin.Controllers
             _context = context;
             _env = env;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Clothes> model = 
-                _context.Clothes.Include(p=>p.ClothesInformation)
-                    .Include(p=>p.ClothesCategories)
-                    .ThenInclude(u=>u.Category)
-                    .Include(p=>p.ClothesImages).ToList();
-            return View(model);
+            List<Clothes> clothes = await _context.Clothes.Include(p=>p.ClothesImages)
+                .Include(p => p.ClothesCategories)
+                .ThenInclude(pc => pc.Category)
+                .ToListAsync();
+
+            return View(clothes);
         }
+        public IActionResult Create()
+        {
+            ViewBag.Information = _context.clothesInformations.ToList();
+            ViewBag.Categories = _context.Categories.ToList();
+            return View();
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Create(Clothes clothes)
+        {
+            ViewBag.Information = _context.clothesInformations.ToList();
+            ViewBag.Categories = _context.Categories.ToList();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            if (clothes.MainPhoto == null || clothes.Photos == null)
+            {
+
+                ModelState.AddModelError(string.Empty, "must choose 1 main photo");
+                return View();
+            }
+            if (!clothes.MainPhoto.ImageIsOkay(2))
+            {
+
+                ModelState.AddModelError(string.Empty, "choose image file");
+                return View();
+            }
+
+            clothes.ClothesImages = new List<ClothesImage>();
+            TempData["Filename"] = "";
+            List<IFormFile> removeable = new List<IFormFile>();
+            foreach (var photo in clothes.Photos.ToList())
+            {
+                if (!photo.ImageIsOkay(2))
+                {
+                    removeable.Add(photo);
+                    TempData["Filename"] += photo.FileName + ",";
+                    continue;
+                }
+                ClothesImage otherphoto = new ClothesImage
+                {
+                    Name = await photo.FileCreate(_env.WebRootPath, "assets/img"),
+                    IsMain = false,
+                    Alternative = clothes.Name,
+                    Clothes = clothes
+                };
+                clothes.ClothesImages.Add(otherphoto);
+            }
+            clothes.ClothesImages.RemoveAll(c => removeable.Any(f => f.FileName == f.FileName));
+            ClothesImage main = new ClothesImage
+            {
+                Name = await clothes.MainPhoto.FileCreate(_env.WebRootPath, "assets/img"),
+                IsMain = true,
+                Alternative = clothes.Name,
+                Clothes = clothes
+            };
+            clothes.ClothesImages.Add(main);
+
+            await _context.Clothes.AddAsync(clothes);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Detail(int? id)
+        {
+            if (id == null || id == 0) return NotFound();
+          Clothes clothes=  _context.Clothes.SingleOrDefault(c => c.Id == id);
+            if (clothes == null) return NotFound();
+            return View(clothes);
+        }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            ViewBag.Information = _context.clothesInformations.ToList();
+            ViewBag.Categories = _context.Categories.ToList();
+            if (id == 0 || id == null) return NotFound();
+            if (!ModelState.IsValid) return View();
+            Clothes clothes = await _context.Clothes
+                .Include(c => c.ClothesImages)
+                .Include(c => c.ClothesInformation)
+                .Include(c => c.ClothesCategories).SingleOrDefaultAsync(c => c.Id == id);
+            if (clothes == null) return NotFound();
+            return View(clothes);
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Edit(int? id,Clothes clothes)
+        {
+            if (id == 0 || id == null) return NotFound();
+            Clothes existed = await _context.Clothes
+               .Include(c => c.ClothesImages)
+               .Include(c => c.ClothesInformation)
+               .Include(c => c.ClothesCategories).FirstOrDefaultAsync(c => c.Id == id);
+            if (!ModelState.IsValid) return View(existed);
+            if (existed == null) return NotFound();
+            List<ClothesImage> clothesImages = existed.ClothesImages.Where(c => c.IsMain == true &&
+            !clothes.ImageId.Contains(c.Id)).ToList();
+
+            _context.Entry(existed).CurrentValues.SetValues(clothes);
+            existed.ClothesImages.RemoveAll(c => clothesImages.Any(r => c.Id == r.Id));
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || id == 0) return NotFound();
+            Clothes clothes = await _context.Clothes.FindAsync(id);
+            if (clothes == null) return NotFound();
+            _context.Clothes.Remove(clothes);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "zn/r3D1uiyYSBrHb7R1CCco27JTWiVpszhXEvZemxNxWTJDwgRvOU7rJ9/r6iUr7yQqHjZ1kr0Wwwdt1Rewq7A==",
+  "dgSpecHash": "zYADG7qOjFjZ/8MlTbgrhnpM0pqJAB68s80raTJ1uvjQ4f3fSiH00eddnLeQsQx5mKGcnU4uaLShgX+wu9KhBg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Murad\\source\\repos\\MultiShop\\MultiShop.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Murad\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.27\\microsoft.aspnetcore.cryptography.internal.3.1.27.nupkg.sha512",
+    "C:\\Users\\Murad\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.27\\microsoft.aspnetcore.cryptography.keyderivation.3.1.27.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\Murad\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.27\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.27.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",
@@ -32,6 +35,8 @@
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.configuration.binder\\3.1.27\\microsoft.extensions.configuration.binder.3.1.27.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\3.1.27\\microsoft.extensions.dependencyinjection.3.1.27.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.27\\microsoft.extensions.dependencyinjection.abstractions.3.1.27.nupkg.sha512",
+    "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.identity.core\\3.1.27\\microsoft.extensions.identity.core.3.1.27.nupkg.sha512",
+    "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.identity.stores\\3.1.27\\microsoft.extensions.identity.stores.3.1.27.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.logging\\3.1.27\\microsoft.extensions.logging.3.1.27.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.27\\microsoft.extensions.logging.abstractions.3.1.27.nupkg.sha512",
     "C:\\Users\\Murad\\.nuget\\packages\\microsoft.extensions.options\\3.1.27\\microsoft.extensions.options.3.1.27.nupkg.sha512",
