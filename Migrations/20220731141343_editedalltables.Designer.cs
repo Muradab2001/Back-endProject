@@ -10,8 +10,8 @@ using MultiShop.DAL;
 namespace MultiShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220731005407_createBasketItemOrder")]
-    partial class createBasketItemOrder
+    [Migration("20220731141343_editedalltables")]
+    partial class editedalltables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -295,9 +295,6 @@ namespace MultiShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryIds")
-                        .HasColumnType("int");
 
                     b.Property<int?>("ClothesInformationId")
                         .HasColumnType("int");

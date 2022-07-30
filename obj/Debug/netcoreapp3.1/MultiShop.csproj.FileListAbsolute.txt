@@ -165,4 +165,6 @@ C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.AspNetCo
 C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
-C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Index.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Cart.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ClothesPartialView.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\Shop.cshtml.g.cs

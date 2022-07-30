@@ -22,7 +22,7 @@ namespace MultiShop.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Cart()
         {
             return View();
         }

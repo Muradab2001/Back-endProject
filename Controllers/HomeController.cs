@@ -23,7 +23,8 @@ namespace MultiShop.Controllers
             HomeVM model = new HomeVM
             {
                 Sliders = _context.Sliders.ToList(),
-                Categories = _context.Categories.ToList()
+                Categories = _context.Categories.Include(x=>x.ClothesCategory).ToList(),
+                Clothes=_context.Clothes.Include(x=>x.ClothesImages).Include(x=>x.ClothesCategories).ThenInclude(x=>x.Category).Include(x=>x.ClothesInformation).ToList()
             };
             return View(model);
 

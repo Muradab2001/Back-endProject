@@ -294,9 +294,6 @@ namespace MultiShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryIds")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ClothesInformationId")
                         .HasColumnType("int");
 

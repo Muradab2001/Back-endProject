@@ -3,10 +3,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MultiShop.Migrations
 {
-    public partial class createBasketItemOrder : Migration
+    public partial class editedalltables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_Setting",
+                table: "Setting");
+
+            migrationBuilder.RenameTable(
+                name: "Setting",
+                newName: "Settings");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Setting_Key",
+                table: "Settings",
+                newName: "IX_Settings_Key");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_Settings",
+                table: "Settings",
+                column: "Id");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -46,6 +64,33 @@ namespace MultiShop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 25, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "clothesInformations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Information = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_clothesInformations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,6 +251,31 @@ namespace MultiShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Clothes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 25, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
+                    Text = table.Column<string>(nullable: true),
+                    Desc = table.Column<string>(nullable: true),
+                    InformationId = table.Column<int>(nullable: false),
+                    ClothesInformationId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clothes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Clothes_clothesInformations_ClothesInformationId",
+                        column: x => x.ClothesInformationId,
+                        principalTable: "clothesInformations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BasketItems",
                 columns: table => new
                 {
@@ -254,11 +324,53 @@ namespace MultiShop.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_Name",
-                table: "Categories",
-                column: "Name",
-                unique: true);
+            migrationBuilder.CreateTable(
+                name: "ClothesCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClothesId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClothesCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClothesCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClothesCategories_Clothes_ClothesId",
+                        column: x => x.ClothesId,
+                        principalTable: "Clothes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClothesImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Alternative = table.Column<string>(nullable: true),
+                    IsMain = table.Column<bool>(nullable: false),
+                    ClothesId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClothesImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClothesImages_Clothes_ClothesId",
+                        column: x => x.ClothesId,
+                        principalTable: "Clothes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -325,6 +437,32 @@ namespace MultiShop.Migrations
                 column: "SizeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clothes_ClothesInformationId",
+                table: "Clothes",
+                column: "ClothesInformationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClothesCategories_CategoryId",
+                table: "ClothesCategories",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClothesCategories_ClothesId",
+                table: "ClothesCategories",
+                column: "ClothesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClothesImages_ClothesId",
+                table: "ClothesImages",
+                column: "ClothesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_AppUserId",
                 table: "Orders",
                 column: "AppUserId");
@@ -351,6 +489,12 @@ namespace MultiShop.Migrations
                 name: "BasketItems");
 
             migrationBuilder.DropTable(
+                name: "ClothesCategories");
+
+            migrationBuilder.DropTable(
+                name: "ClothesImages");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -363,11 +507,34 @@ namespace MultiShop.Migrations
                 name: "Size");
 
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Clothes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Categories_Name",
-                table: "Categories");
+            migrationBuilder.DropTable(
+                name: "clothesInformations");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_Settings",
+                table: "Settings");
+
+            migrationBuilder.RenameTable(
+                name: "Settings",
+                newName: "Setting");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Settings_Key",
+                table: "Setting",
+                newName: "IX_Setting_Key");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_Setting",
+                table: "Setting",
+                column: "Id");
         }
     }
 }

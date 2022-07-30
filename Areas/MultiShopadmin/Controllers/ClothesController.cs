@@ -26,7 +26,7 @@ namespace MultiShop.Areas.MultiShopadmin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            List<Clothes> clothes = await _context.Clothes.Include(p=>p.ClothesImages)
+            List<Clothes> clothes = await _context.Clothes.Include(p => p.ClothesImages)
                 .Include(p => p.ClothesCategories)
                 .ThenInclude(pc => pc.Category)
                 .ToListAsync();
@@ -62,44 +62,65 @@ namespace MultiShop.Areas.MultiShopadmin.Controllers
                 return View();
             }
 
-            clothes.ClothesImages = new List<ClothesImage>();
-            TempData["Filename"] = "";
-            List<IFormFile> removeable = new List<IFormFile>();
-            foreach (var photo in clothes.Photos.ToList())
+            clothes.Image = await FileValidator.FileCreate(clothes.MainPhoto, _env.WebRootPath, "assets/img");
+
+            ClothesImage mainimage = new ClothesImage
             {
-                if (!photo.ImageIsOkay(2))
+                IsMain = true,
+                Name = await FileValidator.FileCreate(clothes.MainPhoto, _env.WebRootPath, "assets/img")
+            };
+           
+
+            clothes.ClothesImages = new List<ClothesImage>();
+
+            clothes.ClothesImages.Add(mainimage);
+
+            clothes.ClothesCategories = new List<ClothesCategory>();
+
+            if (clothes.Photos.Count < 0)
+            {
+                ModelState.AddModelError("", "choose image file");
+                return View();
+            }
+
+            foreach (IFormFile file in clothes.Photos)
+            {
+                if (!file.ImageIsOkay(2))
                 {
-                    removeable.Add(photo);
-                    TempData["Filename"] += photo.FileName + ",";
-                    continue;
+                    ModelState.AddModelError(string.Empty, "choose valid image file");
+                    return View();
                 }
-                ClothesImage otherphoto = new ClothesImage
+
+                ClothesImage clothesImage = new ClothesImage
                 {
-                    Name = await photo.FileCreate(_env.WebRootPath, "assets/img"),
                     IsMain = false,
-                    Alternative = clothes.Name,
+                    Clothes = clothes,
+                    Name = await FileValidator.FileCreate(file, _env.WebRootPath, "assets/img")
+                };
+                clothes.ClothesImages.Add(clothesImage);
+            }
+
+            foreach (int id in clothes.CategoryIds)
+            {
+                ClothesCategory clothesCategory = new ClothesCategory
+                {
+                    CategoryId = id,
                     Clothes = clothes
                 };
-                clothes.ClothesImages.Add(otherphoto);
-            }
-            clothes.ClothesImages.RemoveAll(c => removeable.Any(f => f.FileName == f.FileName));
-            ClothesImage main = new ClothesImage
-            {
-                Name = await clothes.MainPhoto.FileCreate(_env.WebRootPath, "assets/img"),
-                IsMain = true,
-                Alternative = clothes.Name,
-                Clothes = clothes
-            };
-            clothes.ClothesImages.Add(main);
 
-            await _context.Clothes.AddAsync(clothes);
-            await _context.SaveChangesAsync();
+                clothes.ClothesCategories.Add(clothesCategory);
+            };
+
+            _context.Clothes.Add(clothes);
+
+            _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Detail(int? id)
         {
             if (id == null || id == 0) return NotFound();
-          Clothes clothes=  _context.Clothes.SingleOrDefault(c => c.Id == id);
+            Clothes clothes = _context.Clothes.SingleOrDefault(c => c.Id == id);
             if (clothes == null) return NotFound();
             return View(clothes);
         }
@@ -118,7 +139,7 @@ namespace MultiShop.Areas.MultiShopadmin.Controllers
         }
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Edit(int? id,Clothes clothes)
+        public async Task<IActionResult> Edit(int? id, Clothes clothes)
         {
             if (id == 0 || id == null) return NotFound();
             Clothes existed = await _context.Clothes

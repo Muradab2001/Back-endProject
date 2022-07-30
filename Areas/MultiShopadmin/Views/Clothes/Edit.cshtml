@@ -64,9 +64,9 @@
             <select class="form-control" asp-for="InformationId" asp-items="@(new SelectList(ViewBag.Information,"Id","Information"))"></select>
         </div>
         <div>
-            @*<label>Clothes Category:</label><br />
+            <label>Clothes Category:</label><br />
                 <input asp-for="ClothesInformation" type="text" class="form-control" /><br />
-                <span class="text-danger" asp-validation-for="ClothesInformation"></span>*@
+                <span class="text-danger" asp-validation-for="ClothesInformation"></span>
         </div>
         <div class="mt-5">
             <button class="btn btn-success" type="submit"> Update </button>
