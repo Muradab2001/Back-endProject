@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MultiShop.DAL;
 using MultiShop.Models;
+using MultiShop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,10 @@ namespace MultiShop.Controllers
         {
             _context = context;
         }
-        public IActionResult Shop()
+
+        public async Task<IActionResult> Shop(int? id)
         {
-            List<Clothes> clothes = _context.Clothes.Include(c => c.ClothesInformation).Include(c => c.ClothesImages).Include(c => c.ClothesCategories).ToList();
-            return View(clothes);
+            return View();
         }
     }
 }

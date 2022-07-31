@@ -168,3 +168,6 @@ C:\Users\Murad\source\repos\MultiShop\bin\Debug\netcoreapp3.1\Microsoft.Extensio
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Cart.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ClothesPartialView.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\Shop.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Order\Checkout.cshtml.g.cs
