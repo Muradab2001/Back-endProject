@@ -171,3 +171,4 @@ C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\S
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Order\Checkout.cshtml.g.cs
+C:\Users\Murad\source\repos\MultiShop\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Index.cshtml.g.cs

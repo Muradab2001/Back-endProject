@@ -41,13 +41,19 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                  
+
                     <div class="btn-group mx-2">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
+                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">EUR</button>
-                            <button class="dropdown-item" type="button">GBP</button>
-                            <button class="dropdown-item" type="button">CAD</button>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                    <a asp-controller="account" asp-action="logout" class="dropdown-item" type="submit">Logout</a>
+                                    @Html.ActionLink(User.Identity.Name, "Manager", "Account", routeValues: null, htmlAttributes:
+                                   new { @class = "username", title = "Manager" }) }
+                                                else
+                                                {
+                                    <a asp-controller="account" asp-action="login" class="dropdown-item" type="submit">Sign in</a>
+                                                    <a asp-controller="account" asp-action="register" class="dropdown-item" type="submit">Sign up</a>}
                         </div>
                     </div>
                     <div class="btn-group">
@@ -62,12 +68,12 @@
                 <div class="d-inline-flex align-items-center d-block d-lg-none">
                     <a href="" class="btn px-0 ml-2">
                         <i class="fas fa-heart text-dark"></i>
-                      
+
                     </a>
                     <a href="" class="btn px-0 ml-2">
                         <i class="fas fa-shopping-cart text-dark"></i>
                         <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">
-                   
+
                         </span>
                     </a>
                 </div>
@@ -111,7 +117,7 @@
                     <div class="navbar-nav w-100">
                         @foreach (Category category in layoutservice.GetCategories())
                         {
-                    <a asp-controller="shop" asp-action="shop" asp-route-id="@category.Id" class="nav-item nav-link">@category.Name</a>}
+                            <a asp-controller="shop" asp-action="shop" asp-route-id="@category.Id" class="nav-item nav-link">@category.Name</a>}
                     </div>
                 </nav>
             </div>
@@ -126,27 +132,28 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Home</a>
+                            <a asp-controller="Shop" asp-action="Shop" class="nav-item nav-link">Shop</a>
+                            <a asp-controller="Clothes" asp-action="Detail" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                    <a asp-controller="Cart" asp-action="Cart" class="dropdown-item">Shopping Cart</a>
+                                    <a asp-controller="Order" asp-action="checkout" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a asp-controller="Contact" asp-action="Index" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="" class="btn px-0">
                                 <i class="fas fa-heart text-primary"></i>
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                             </a>
-                            <a href="" class="btn px-0 ml-3">
+                            <a asp-controller="Cart" asp-action="Cart" asp-route-id="" class="btn px-0 ml-3">
                                 <i class="fas fa-shopping-cart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">          
-                                @(layoutservice.GetBasket()!=null ? layoutservice.GetBasket().BasketItemVMs.Count.ToString() : "0")</span>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">
+                                    @(layoutservice.GetBasket()!=null ? layoutservice.GetBasket().BasketItemVMs.Count.ToString(): "0")
+                                </span>
                             </a>
                         </div>
                     </div>
@@ -242,8 +249,8 @@
 
     <!-- Template Javascript -->
     <script src="~/assets/js/main.js"></script>
-    
-  
+
+
 </body>
 
 </html>

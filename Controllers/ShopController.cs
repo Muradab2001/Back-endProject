@@ -21,7 +21,8 @@ namespace MultiShop.Controllers
 
         public async Task<IActionResult> Shop(int? id)
         {
-            return View();
+            List<Clothes> clothes = _context.Clothes.Include(c => c.ClothesInformation).Include(c => c.ClothesImages).Include(c => c.ClothesCategories).ToList();
+            return View(clothes);
         }
     }
 }
