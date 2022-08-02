@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MultiShop.DAL;
 using MultiShop.Models;
+using MultiShop.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +31,22 @@ namespace MultiShop.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Checkout(Order order)
         {
-            if (!ModelState.IsValid) return View();
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-            List<BasketItem> items = await _context.BasketItems.Include(b => b.AppUser)
-                .Include(b => b.Clothes).Where(b => b.AppUser.Id == user.Id).ToListAsync();
-            return RedirectToAction(nameof(Index));
+            List<BasketItem> basket = await _context.BasketItems.Include(o => o.AppUser)
+                .Include(o => o.Clothes)
+                .Where(o => o.AppUserId == user.Id).ToListAsync();
+            order.Date = DateTime.Now;
+            order.Price = default;
+            order.TotalPrice = default;
+            order.AppUser = user;
+            order.BasketItems = basket;
+            foreach (BasketItem item in basket)
+            {
+                order.TotalPrice += item.Price * item.Quantity;
+            }
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

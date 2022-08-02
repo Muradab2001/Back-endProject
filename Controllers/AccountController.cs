@@ -53,7 +53,6 @@ namespace MultiShop.Controllers
                 }
                 return View();
             }
-            await _userManager.AddToRoleAsync(user, "Member");
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Login()
